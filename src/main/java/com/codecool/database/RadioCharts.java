@@ -11,7 +11,7 @@ public class RadioCharts {
     private String USERNAME;
     private String PASSWORD;
 
-    public RadioCharts(String DB_URL, String USERNAME, String PASSWORD) {
+    RadioCharts(String DB_URL, String USERNAME, String PASSWORD) {
         this.DB_URL = DB_URL;
         this.USERNAME = USERNAME;
         this.PASSWORD = PASSWORD;
@@ -28,7 +28,7 @@ public class RadioCharts {
         return connection;
     }
 
-    public String getMostPlayedSong() {
+    String getMostPlayedSong() {
         Map<String, Integer> playedSongMap = new LinkedHashMap<>();
 
         try (Connection connection = getConnection()) {
@@ -62,7 +62,7 @@ public class RadioCharts {
         return "";
     }
 
-    public String getMostActiveArtist() {
+    String getMostActiveArtist() {
 
         try (Connection connection = getConnection()) {
             String sql = "" +
@@ -92,6 +92,7 @@ public class RadioCharts {
         } catch (SQLException sql) {
             System.out.println("Exception while getMostActiveArtist()");
         }
+
         return "";
     }
 }
