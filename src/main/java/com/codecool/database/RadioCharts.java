@@ -5,7 +5,7 @@ import java.sql.*;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class RadioCharts {
+class RadioCharts {
 
     private String DB_URL;
     private String USERNAME;
