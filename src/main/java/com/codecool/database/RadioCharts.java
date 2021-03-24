@@ -63,6 +63,35 @@ public class RadioCharts {
     }
 
     public String getMostActiveArtist() {
+
+        try (Connection connection = getConnection()) {
+            String sql = "" +
+                    "SELECT MAX(num_of_songs) AS max_num_of_songs " +
+                    "FROM (SELECT artist, COUNT(DISTINCT song) AS num_of_songs " +
+                    "FROM music_broadcast " +
+                    "GROUP BY artist);";
+            PreparedStatement pst = connection.prepareStatement(sql);
+            ResultSet rst = pst.executeQuery();
+            int maxNumOfSongs;
+            if (rst.next()) {
+                maxNumOfSongs = rst.getInt("max_num_of_songs");
+            } else {
+                return "";
+            }
+
+            sql = "SELECT artist, COUNT(song) AS num_of_songs FROM music_broadcast " +
+                    "GROUP BY artist HAVING num_of_songs = ?;";
+            pst = connection.prepareStatement(sql);
+            pst.setInt(1, maxNumOfSongs);
+            rst = pst.executeQuery();
+
+            if (rst.next()) {
+                return rst.getString("artist");
+            }
+            return "";
+        } catch (SQLException sql) {
+            System.out.println("Exception while getMostActiveArtist()");
+        }
         return "";
     }
 }
